@@ -14,10 +14,7 @@ def find_path(
         return [start]
 
     def heuristica(node):
-        x1, y1 = city_map.intersections[node]
-        x2, y2 = city_map.intersections[goal]
-
-        return hypot(x2 - x1, y2 - y1)
+        return 0
 
     falta_pecorrer = []
 

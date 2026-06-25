@@ -13,66 +13,66 @@ def find_path(
     if start == goal:
         return [start]
 
-    def heuristic(node):
+    def heuristica(node):
         x1, y1 = city_map.intersections[node]
         x2, y2 = city_map.intersections[goal]
 
         return hypot(x2 - x1, y2 - y1)
 
-    open_set = []
+    falta_pecorrer = []
 
     heapq.heappush(
-        open_set,
-        (heuristic(start), start)
+        falta_pecorrer,
+        (heuristica(start), start)
     )
 
-    came_from = {}
+    pais = {}
 
     g_score = {start: 0}
 
-    while open_set:
+    while falta_pecorrer:
 
-        _, current = heapq.heappop(
-            open_set
+        _, atual = heapq.heappop(
+            falta_pecorrer
         )
 
-        if current == goal:
+        if atual == goal:
 
-            path = [current]
+            path = [atual]
 
-            while current in came_from:
-                current = came_from[current]
-                path.append(current)
+            while atual in pais:
+                atual = pais[atual]
+                path.append(atual)
 
             path.reverse()
 
             return path
 
-        for neighbor in city_map.roads[current]:
+        for filho in city_map.roads[atual]:
 
-            tentative_g = (
-                g_score[current] + 1
+            tentativa_g = (
+                g_score[atual] + 1
             )
 
-            if tentative_g < g_score.get(
-                neighbor,
+            if tentativa_g < g_score.get(
+                filho,
                 float("inf")
             ):
 
-                came_from[neighbor] = current
+                pais[filho] = atual
 
-                g_score[neighbor] = tentative_g
+                g_score[filho] = tentativa_g
 
                 f_score = (
-                    tentative_g
-                    + heuristic(neighbor)
+                    tentativa_g
+                    + heuristica(filho)
                 )
 
                 heapq.heappush(
-                    open_set,
+                    falta_pecorrer,
                     (
                         f_score,
-                        neighbor
+                        filho
                     )
                 )
 
